@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AITA INTI | Restaurante en Portuetxe</title>
+  <style>
+    /* ESTILOS GENERALES */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    header {
+      background-color: #1a1a1a;
+      color: white;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      letter-spacing: 2px;
+    }
+    header p {
+      margin-top: 0.5rem;
+      color: #ccc;
+    }
+    .container {
+      max-width: 900px;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+
+    /* SECCIÓN MENÚ */
+    .menu-section {
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      background-color: #e0e0e0;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+    .tab-btn.active-vasco {
+      background-color: #c92a2a;
+      color: white;
+    }
+    .tab-btn.active-peruano {
+      background-color: #d97706;
+      color: white;
+    }
+    .menu-content {
+      display: none;
+    }
+    .menu-content.active {
+      display: block;
+    }
+    .menu-header {
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+    }
+
+    /* AVISO MENÚ DIARIO Y VISUALIZADOR DE CARTA */
+    .daily-notice {
+      background-color: #e7f5ff;
+      border-left: 4px solid #1c7ed6;
+      padding: 12px 15px;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      border-radius: 0 4px 4px 0;
+    }
+    .menu-viewer {
+      text-align: center;
+      margin-top: 20px;
+      padding: 15px;
+      background: #fafafa;
+      border: 2px dashed #ddd;
+      border-radius: 8px;
+    }
+    .menu-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      margin-bottom: 15px;
+    }
+    .btn-pdf {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #0284c7;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .btn-pdf:hover {
+      background-color: #0369a1;
+    }
+
+    /* SECCIÓN RESERVAS */
+    .booking-section {
+      background: white;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    .notice-box {
+      padding: 12px;
+      border-radius: 4px;
+      font-weight: bold;
+      margin-top: 10px;
+      display: none;
+    }
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      background-color: #1a1a1a;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn-submit:hover {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>AITA INTI</h1>
+    <p>📍 Portuetxe CP 20018, Donostia - San Sebastián</p>
+    <p><strong>Lun-Vie:</strong> 06:00 - 17:00 (Cocina Vasca) | <strong>Sáb:</strong> 09:00 - 17:00 (Cocina Peruana)</p>
+  </header>
+
+  <div class="container">
+
+    <!-- SECCIÓN DE CARTAS DE MENÚ -->
+    <section class="menu-section">
+      <h2>Nuestra Carta del Día</h2>
+      
+      <!-- Pestañas para cambiar entre menús -->
+      <div class="tabs">
+        <button class="tab-btn active-vasco" onclick="switchMenu('vasco', this)">🔴 Lunes a Viernes (Comida Vasca)</button>
+        <button class="tab-btn" onclick="switchMenu('peruano', this)">🟡 Sábados (Comida Peruana)</button>
+      </div>
+
+      <!-- CARTA VASCA (FOTO / PDF) -->
+      <div id="menu-vasco" class="menu-content active">
+        <div class="menu-header">
+          <h3>Cocina Vasca Tradicional</h3>
+          <p>Desayunos desde las 6:00 AM. Comidas de 12:00 a 17:00 PM.</p>
+        </div>
+
+        <div class="daily-notice">
+          📸 <strong>Menú del Día Fresco:</strong> Actualizamos nuestra pizarra y carta a diario con ingredientes frescos del mercado.
+        </div>
+
+        <div class="menu-viewer">
+          <h4>📌 Menú de Hoy (Comida Vasca)</h4>
+          
+          <!-- RUTA DE LA FOTO DE LA PIZARRA / CARTA DE HOY -->
+          <img src="menu-vasco-hoy.jpg" alt="Menú del Día AITA INTI" class="menu-img" onerror="this.src='https://via.placeholder.com/600x800?text=Subiendo+menu+de+hoy...'">
+          
+          <br>
+          <!-- BOTÓN OPCIONAL PARA DESCARGAR EN PDF -->
+          <a href="menu-vasco-hoy.pdf" target="_blank" class="btn-pdf">📄 Descargar Menú en PDF</a>
+        </div>
+      </div>
+
+      <!-- CARTA PERUANA (FOTO / PDF) -->
+      <div id="menu-peruano" class="menu-content">
+        <div class="menu-header">
+          <h3>Gastronomía Peruana (Especial de Sábado)</h3>
+          <p>Servido exclusivamente los sábados de 9:00 AM a 5:00 PM.</p>
+        </div>
+
+        <div class="daily-notice">
+          🇵🇪 <strong>Sabores del Perú:</strong> Ceviches, Lomo Saltado, Causa Limeña, Pan con Chicharrón y Coctelería Tradicional.
+        </div>
+
+        <div class="menu-viewer">
+          <h4>📌 Carta Peruana de este Sábado</h4>
+          
+          <!-- RUTA DE LA FOTO / CARTA PERUANA -->
+          <img src="menu-peruano-sabado.jpg" alt="Carta Peruana AITA INTI" class="menu-img" onerror="this.src='https://via.placeholder.com/600x800?text=Menu+peruano+disponible+el+sabado'">
+          
+          <br>
+          <!-- BOTÓN OPCIONAL PARA DESCARGAR EN PDF -->
+          <a href="menu-peruano-sabado.pdf" target="_blank" class="btn-pdf">📄 Descargar Carta Peruana en PDF</a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SECCIÓN DE RESERVAS INTERACTIVA -->
+    <section class="booking-section">
+      <h2>Reservar Mesa</h2>
+      <form id="bookingForm">
+        <div class="form-group">
+          <label for="fecha">Fecha de Reserva:</label>
+          <input type="date" id="fecha" required>
+        </div>
+
+        <div id="noticeBox" class="notice-box"></div>
+
+        <div class="form-group" style="margin-top: 15px;">
+          <label for="hora">Hora:</label>
+          <select id="hora" required disabled>
+            <option value="">-- Selecciona primero una fecha --</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="personas">Número de personas:</label>
+          <input type="number" id="personas" min="1" max="15" value="2" required>
+        </div>
+
+        <div class="form-group">
+          <label for="nombre">Nombre Completo:</label>
+          <input type="text" id="nombre" placeholder="Ej. Juan Pérez" required>
+        </div>
+
+        <button type="submit" class="btn-submit">Confirmar Reserva</button>
+      </form>
+    </section>
+
+  </div>
+
+  <!-- SCRIPT DE FUNCIONAMIENTO -->
+  <script>
+    // CAMBIAR PESTAÑAS DE MENÚ
+    function switchMenu(type, btnElement) {
+      document.getElementById('menu-vasco').classList.remove('active');
+      document.getElementById('menu-peruano').classList.remove('active');
+
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => btn.classList.remove('active-vasco', 'active-peruano'));
+
+      if (type === 'vasco') {
+        document.getElementById('menu-vasco').classList.add('active');
+        btnElement.classList.add('active-vasco');
+      } else {
+        document.getElementById('menu-peruano').classList.add('active');
+        btnElement.classList.add('active-peruano');
+      }
+    }
+
+    // CALENDARIO Y HORARIOS DINÁMICOS
+    const fechaInput = document.getElementById('fecha');
+    const horaSelect = document.getElementById('hora');
+    const noticeBox = document.getElementById('noticeBox');
+
+    const today = new Date().toISOString().split('T')[0];
+    fechaInput.setAttribute('min', today);
+
+    fechaInput.addEventListener('change', function() {
+      const selectedDate = new Date(this.value + 'T00:00:00');
+      const dayOfWeek = selectedDate.getDay();
+
+      horaSelect.innerHTML = '<option value="">-- Selecciona hora --</option>';
+      horaSelect.disabled = false;
+
+      if (dayOfWeek === 0) {
+        noticeBox.style.display = 'block';
+        noticeBox.style.backgroundColor = '#ffe3e3';
+        noticeBox.style.color = '#c92a2a';
+        noticeBox.innerHTML = '❌ Los domingos cerramos por descanso.';
+        horaSelect.disabled = true;
+      } else if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+        noticeBox.style.display = 'block';
+        noticeBox.style.backgroundColor = '#d3f9d8';
+        noticeBox.style.color = '#2b8a3e';
+        noticeBox.innerHTML = '🔴 Reserva para Menú Vasco (Horario disponible: 06:00 - 16:30)';
+        populateHours(6, 16);
+      } else if (dayOfWeek === 6) {
+        noticeBox.style.display = 'block';
+        noticeBox.style.backgroundColor = '#fff3bf';
+        noticeBox.style.color = '#e67700';
+        noticeBox.innerHTML = '🟡 Reserva para Menú Peruano (Horario disponible: 09:00 - 16:30)';
+        populateHours(9, 16);
+      }
+    });
+
+    function populateHours(startHour, endHour) {
+      for (let h = startHour; h <= endHour; h++) {
+        let hourFormat = h < 10 ? '0' + h : h;
+        let opt1 = document.createElement('option');
+        opt1.value = `${hourFormat}:00`;
+        opt1.textContent = `${hourFormat}:00`;
+        horaSelect.appendChild(opt1);
+
+        if (h !== endHour) {
+          let opt2 = document.createElement('option');
+          opt2.value = `${hourFormat}:30`;
+          opt2.textContent = `${hourFormat}:30`;
+          horaSelect.appendChild(opt2);
+        }
+      }
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert(`¡Reserva confirmada en AITA INTI!\nNombre: ${document.getElementById('nombre').value}\nFecha: ${fechaInput.value}\nHora: ${horaSelect.value}`);
+    });
+  </script>
+</body>
+</html>

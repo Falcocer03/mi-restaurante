@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AITA INTI | Restaurante en Portuetxe</title>
+  <style>
+    /* PALETA DE COLORES Y ESTILOS BASE */
+    :root {
+      --primary-vasco: #a61e1e;
+      --primary-peru: #d97706;
+      --bg-dark: #1f1917;
+      --bg-card: #ffffff;
+      --bg-body: #fdfbf7;
+      --text-main: #2b2523;
+      --text-muted: #665e5b;
+      --gold: #f59e0b;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+    }
+
+    /* BANNER PRINCIPAL (HERO SECTION CON TU FOTO REAL AITA.JPG) */
+    .hero {
+      position: relative;
+      background: linear-gradient(rgba(0, 0, 0, 0.60), rgba(0, 0, 0, 0.60)), 
+                  url('Aita.jpg') center/cover no-repeat;
+      color: white;
+      text-align: center;
+      padding: 5rem 1rem;
+      border-bottom: 5px solid var(--gold);
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin: 0;
+      letter-spacing: 3px;
+      font-weight: 800;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .hero .tagline {
+      font-size: 1.3rem;
+      color: #f3f4f6;
+      margin-top: 10px;
+      font-style: italic;
+    }
+
+    .hero-info {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .info-badge {
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 15px;
+    }
+
+    /* GALERÍA DE FOTOS */
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: var(--bg-dark);
+      position: relative;
+    }
+    
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 4px;
+      background: var(--gold);
+      margin: 8px auto 0;
+      border-radius: 2px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-bottom: 40px;
+    }
+
+    .gallery-card {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      height: 200px;
+      transition: transform 0.3s ease;
+    }
+
+    .gallery-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .gallery-card .caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.8));
+      color: white;
+      padding: 10px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    /* SECCIÓN DE MENÚ Y PESTAÑAS */
+    .menu-section {
+      background: var(--bg-card);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      margin-bottom: 40px;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 15px;
+      border: none;
+      background-color: #f3f4f6;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      color: var(--text-muted);
+    }
+
+    .tab-btn.active-vasco {
+      background-color: var(--primary-vasco);
+      color: white;
+      box-shadow: 0 4px 12px rgba(166, 30, 30, 0.3);
+    }
+
+    .tab-btn.active-peruano {
+      background-color: var(--primary-peru);
+      color: white;
+      box-shadow: 0 4px 12px rgba(217, 119, 6, 0.3);
+    }
+
+    .menu-content {
+      display: none;
+    }
+
+    .menu-content.active {
+      display: block;
+    }
+
+    .daily-notice {
+      background-color: #fff9db;
+      border-left: 5px solid var(--gold);
+      padding: 15px;
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+      border-radius: 6px;
+      color: #854d0e;
+    }
+
+    .menu-viewer {
+      text-align: center;
+      padding: 20px;
+      background: #fafaf9;
+      border: 2px dashed #e7e5e4;
+      border-radius: 12px;
+    }
+
+    .menu-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.12);
+      margin-bottom: 15px;
+    }
+
+    .btn-pdf {
+      display: inline-block;
+      padding: 10px 22px;
+      background-color: #0284c7;
+      color: white;
+      text-decoration: none;
+      border-radius: 20px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    .btn-pdf:hover {
+      background-color: #0369a1;
+    }
+
+    /* FORMULARIO DE RESERVAS */
+    .booking-section {
+      background: var(--bg-card);
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+    }
+
+    .form-group {
+      margin-bottom: 18px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--bg-dark);
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #e7e5e4;
+      border-radius: 8px;
+      box-sizing: border-box;
+      font-size: 1rem;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      outline: none;
+      border-color: var(--gold);
+    }
+
+    .notice-box {
+      padding: 14px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin-top: 15px;
+      display: none;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 15px;
+      background-color: #25d366;
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(37, 211, 102, 0.4);
+      transition: transform 0.2s;
+    }
+
+    .btn-submit:hover {
+      transform: scale(1.02);
+      background-color: #1eb857;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PORTADA DEL RESTAURANTE (CON AITA.JPG) -->
+  <header class="hero">
+    <h1>AITA INTI</h1>
+    <p class="tagline">Tradición Vasca entre semana • Pasión Peruana el Sábado</p>
+    
+    <div class="hero-info">
+      <span class="info-badge">📍 Portuetxe CP 20018, Donostia</span>
+      <span class="info-badge">🔴 Lun-Vie: 06:00 - 17:00</span>
+      <span class="info-badge">🟡 Sáb: 09:00 - 17:00</span>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- GALERÍA DE INFRAESTRUCTURA Y PLATOS -->
+    <h2 class="section-title">Conoce AITA INTI</h2>
+    <div class="gallery-grid">
+      
+      <!-- FOTO REAL: Entrada y terraza de AITA INTI -->
+      <div class="gallery-card">
+        <img src="Aita.jpg" alt="Instalaciones de AITA INTI">
+        <div class="caption">Nuestra Entrada y Terraza</div>
+      </div>
+
+      <!-- FOTO 2: Comida Vasca -->
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80" alt="Comida Vasca Tradicional">
+        <div class="caption">🔴 Cocina Vasca (Lun-Vie)</div>
+      </div>
+
+      <!-- FOTO 3: Comida Peruana -->
+      <div class="gallery-card">
+        <img src="https://images.unsplash.com/photo-1535399831218-d5bd36d1a6b3?auto=format&fit=crop&w=600&q=80" alt="Especialidades Peruanas">
+        <div class="caption">🟡 Especialidades del Perú (Sáb)</div>
+      </div>
+
+      <!-- FOTO 4: Barra de Pintxos -->
+      <div class="gallery-card">
+        <img src="Aita1.jpg" alt="Barra de Pintxos y Copas">
+        <div class="caption">Desayunos y Pintxos</div>
+      </div>
+
+    </div>
+
+    <!-- SECCIÓN DE CARTAS DE MENÚ -->
+    <section class="menu-section">
+      <h2 class="section-title">Nuestra Carta del Día</h2>
+      
+      <div class="tabs">
+        <button class="tab-btn active-vasco" onclick="switchMenu('vasco', this)">🔴 Lunes a Viernes (Comida Vasca)</button>
+        <button class="tab-btn" onclick="switchMenu('peruano', this)">🟡 Sábados (Comida Peruana)</button>
+      </div>
+
+      <!-- CARTA VASCA -->
+      <div id="menu-vasco" class="menu-content active">
+        <div class="daily-notice">
+          📸 <strong>Menú del Día Fresco:</strong> Actualizamos nuestra pizarra y carta a diario con producto local del Cantábrico y huertas vascas.
+        </div>
+
+        <div class="menu-viewer">
+          <h4>📌 Menú de Hoy (Comida Vasca)</h4>
+          <img src="menu-vasco-hoy.jpg" alt="Menú Vasca AITA INTI" class="menu-img" onerror="this.src='https://via.placeholder.com/600x800?text=Sube+aqui+la+foto+del+menu+vasco+de+hoy'">
+          <br>
+          <a href="menu-vasco-hoy.pdf" target="_blank" class="btn-pdf">📄 Descargar Menú en PDF</a>
+        </div>
+      </div>
+
+      <!-- CARTA PERUANA -->
+      <div id="menu-peruano" class="menu-content">
+        <div class="daily-notice">
+          🇵🇪 <strong>Sabores del Perú:</strong> Ceviches, Tiraditos, Lomo Saltado, Causa Limeña, Tamales y Pisco Sour.
+        </div>
+
+        <div class="menu-viewer">
+          <h4>📌 Carta Peruana de este Sábado</h4>
+          <img src="menu-peruano-sabado.jpg" alt="Carta Peruana AITA INTI" class="menu-img" onerror="this.src='https://via.placeholder.com/600x800?text=Sube+aqui+la+foto+del+menu+peruano'">
+          <br>
+          <a href="menu-peruano-sabado.pdf" target="_blank" class="btn-pdf">📄 Descargar Carta Peruana en PDF</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORMULARIO DE RESERVAS -->
+    <section class="booking-section">
+      <h2 class="section-title">Reserva tu Mesa</h2>
+      <form id="bookingForm">
+        <div class="form-group">
+          <label for="fecha">Fecha de Reserva:</label>
+          <input type="date" id="fecha" required>
+        </div>
+
+        <div id="noticeBox" class="notice-box"></div>
+
+        <div class="form-group" style="margin-top: 15px;">
+          <label for="hora">Hora:</label>
+          <select id="hora" required disabled>
+            <option value="">-- Selecciona primero una fecha --</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="personas">Número de personas:</label>
+          <input type="number" id="personas" min="1" max="15" value="2" required>
+        </div>
+
+        <div class="form-group">
+          <label for="nombre">Nombre Completo:</label>
+          <input type="text" id="nombre" placeholder="Ej. Juan Pérez" required>
+        </div>
+
+        <button type="submit" class="btn-submit">
+          📲 Confirmar Reserva por WhatsApp
+        </button>
+      </form>
+    </section>
+
+  </div>
+
+  <script>
+    let tipoComida = "";
+
+    function switchMenu(type, btnElement) {
+      document.getElementById('menu-vasco').classList.remove('active');
+      document.getElementById('menu-peruano').classList.remove('active');
+
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => btn.classList.remove('active-vasco', 'active-peruano'));
+
+      if (type === 'vasco') {
+        document.getElementById('menu-vasco').classList.add('active');
+        btnElement.classList.add('active-vasco');
+      } else {
+        document.getElementById('menu-peruano').classList.add('active');
+        btnElement.classList.add('active-peruano');
+      }
+    }
+
+    const fechaInput = document.getElementById('fecha');
+    const horaSelect = document.getElementById('hora');
+    const noticeBox = document.getElementById('noticeBox');
+
+    const today = new Date().toISOString().split('T')[0];
+    fechaInput.setAttribute('min', today);
+
+    fechaInput.addEventListener('change', function() {
+      const selectedDate = new Date(this.value + 'T00:00:00');
+      const dayOfWeek = selectedDate.getDay();
+
+      horaSelect.innerHTML = '<option value="">-- Selecciona hora --</option>';
+      horaSelect.disabled = false;
+
+      if (dayOfWeek === 0) {
+        noticeBox.style.display = 'block';
+        noticeBox.style.backgroundColor = '#ffe3e3';
+        noticeBox.style.color = '#c92a2a';
+        noticeBox.innerHTML = '❌ Los domingos cerramos por descanso.';
+        horaSelect.disabled = true;
+        tipoComida = "";
+      } else if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+        noticeBox.style.display = 'block';
+        noticeBox.style.backgroundColor = '#d3f9d8';
+        noticeBox.style.color = '#2b8a3e';
+        noticeBox.innerHTML = '🔴 Reserva para Menú Vasco (Horario disponible: 06:00 - 16:30)';
+        populateHours(6, 16);
+        tipoComida = "Cocina Vasca (Menú del Día)";
+      } else if (dayOfWeek === 6) {
+        noticeBox.style.display = 'block';
+        noticeBox.style.backgroundColor = '#fff3bf';
+        noticeBox.style.color = '#e67700';
+        noticeBox.innerHTML = '🟡 Reserva para Menú Peruano (Horario disponible: 09:00 - 16:30)';
+        populateHours(9, 16);
+        tipoComida = "Cocina Peruana (Especial Sábado)";
+      }
+    });
+
+    function populateHours(startHour, endHour) {
+      for (let h = startHour; h <= endHour; h++) {
+        let hourFormat = h < 10 ? '0' + h : h;
+        let opt1 = document.createElement('option');
+        opt1.value = `${hourFormat}:00`;
+        opt1.textContent = `${hourFormat}:00`;
+        horaSelect.appendChild(opt1);
+
+        if (h !== endHour) {
+          let opt2 = document.createElement('option');
+          opt2.value = `${hourFormat}:30`;
+          opt2.textContent = `${hourFormat}:30`;
+          horaSelect.appendChild(opt2);
+        }
+      }
+    }
+
+    document.getElementById('bookingForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const miTelefono = "34614362726";
+      const fecha = fechaInput.value;
+      const hora = horaSelect.value;
+      const personas = document.getElementById('personas').value;
+      const nombre = document.getElementById('nombre').value;
+
+      const mensaje = `Hola *AITA INTI*, me gustaría solicitar una reserva:%0A%0A` +
+                      `👤 *Nombre:* ${nombre}%0A` +
+                      `📅 *Fecha:* ${fecha}%0A` +
+                      `⏰ *Hora:* ${hora}%0A` +
+                      `👥 *Personas:* ${personas}%0A` +
+                      `🍽️ *Experiencia:* ${tipoComida}%0A` +
+                      `📍 *Ubicación:* Portuetxe, CP 20018`;
+
+      window.open(`https://wa.me/${miTelefono}?text=${mensaje}`, '_blank');
+    });
+  </script>
+</body>
+</html>
